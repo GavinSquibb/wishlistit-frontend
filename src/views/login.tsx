@@ -13,8 +13,10 @@ import {
   Anchor,
   Stack,
   Center,
+  Image,
 } from "@mantine/core";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/wishlistit-logo.png";
 
 export function AuthenticationForm(props: PaperProps) {
   const navigate = useNavigate();
@@ -37,11 +39,18 @@ export function AuthenticationForm(props: PaperProps) {
   });
 
   return (
-    <Center p={"300px"}>
-      <Paper radius="xl" p="xl" withBorder w={"600px"} {...props}>
-        <Text size="lg" weight={500}>
-          Welcome to WishListIt
-        </Text>
+    <Center p={250}>
+      <Paper radius="xl" p="xl" withBorder w={450} {...props}>
+        <Center>
+          <Stack>
+            <Image maw={260} src={logo} alt="wishlistit-logo" />
+            <Center>
+              <Text size="lg" weight={500}>
+                Welcome to WishListIt
+              </Text>
+            </Center>
+          </Stack>
+        </Center>
 
         <Divider my="lg" />
 

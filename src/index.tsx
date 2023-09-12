@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { AuthenticationForm } from "./views/login";
+import { AuthenticationForm } from "./views/Login";
+import { AppHeader } from "./components/AppHeader/AppHeader";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hellow World!</div>,
+    element: <AppHeader></AppHeader>,
   },
   {
     path: "/login",
