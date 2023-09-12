@@ -16,6 +16,7 @@ import {
   Image,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import logo from "../assets/wishlistit-logo.png";
 
 export function AuthenticationForm(props: PaperProps) {
@@ -23,17 +24,18 @@ export function AuthenticationForm(props: PaperProps) {
   const [type, toggle] = useToggle(["login", "register"]);
   const form = useForm({
     initialValues: {
-      email: "",
+      username: "",
       name: "",
       password: "",
       terms: true,
     },
 
     validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
+      username: (val) =>
+        val.length <= 2 ? "Username should be longer than 2 characters" : null,
       password: (val) =>
         val.length <= 2
-          ? "Password should include at least 6 characters"
+          ? "Password should include at least 2 characters"
           : null,
     },
   });
@@ -55,7 +57,28 @@ export function AuthenticationForm(props: PaperProps) {
         <Divider my="lg" />
 
         <form
-          onSubmit={form.onSubmit(() => {
+          onSubmit={form.onSubmit(async () => {
+            // todo move to own function
+            const { data } = await axios.post(
+              "http://localhost:8000/token/",
+              {
+                username: form.values.username,
+                password: form.values.password,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                // withCredentials: true,
+              }
+            );
+
+            localStorage.clear();
+            localStorage.setItem("access_token", data.access);
+            localStorage.setItem("refresh_token", data.refresh);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${data["access"]}`;
             navigate("/");
           })}
         >
@@ -74,13 +97,16 @@ export function AuthenticationForm(props: PaperProps) {
 
             <TextInput
               required
-              label="Email"
-              placeholder="your@email.co.uk"
-              value={form.values.email}
+              label="Username"
+              placeholder="Username"
+              value={form.values.username}
               onChange={(event) =>
-                form.setFieldValue("email", event.currentTarget.value)
+                form.setFieldValue("username", event.currentTarget.value)
               }
-              error={form.errors.email && "Invalid email"}
+              error={
+                form.errors.username &&
+                "Username should include at least 2 characters"
+              }
               radius="md"
             />
 
@@ -94,7 +120,7 @@ export function AuthenticationForm(props: PaperProps) {
               }
               error={
                 form.errors.password &&
-                "Password should include at least 6 characters"
+                "Password should include at least 2 characters"
               }
               radius="md"
             />
