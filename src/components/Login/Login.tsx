@@ -72,7 +72,8 @@ export function AuthenticationForm(props: PaperProps) {
               }
             );
 
-            localStorage.clear();
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
             localStorage.setItem("access_token", data.access);
             localStorage.setItem("refresh_token", data.refresh);
             axios.defaults.headers.common[

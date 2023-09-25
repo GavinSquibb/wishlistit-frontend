@@ -26,6 +26,7 @@ export const DiscussionBox = ({ id }: IDiscussionBoxProps) => {
       username: username,
     });
     sendMessage(jsonData);
+    setMessage("");
   };
 
   useEffect(() => {

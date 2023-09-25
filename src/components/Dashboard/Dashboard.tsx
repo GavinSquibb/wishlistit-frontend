@@ -7,8 +7,18 @@ export function Dashboard() {
   const [data, setData] = useState<any[]>([]);
 
   const getData = async () => {
-    const { data } = await getWishLists();
-    setData(data);
+    try {
+      const response = await getWishLists();
+      if (response.data) {
+        setData(response.data);
+      } else {
+        // Handle the case where data is undefined or falsy
+        console.error("Data is undefined or empty");
+      }
+    } catch (error) {
+      // Handle any errors that may occur during the API call
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {

@@ -27,7 +27,7 @@ export function AppHeader() {
             </Button>
           </Group>
           <Avatar color="red" radius={"xl"} top={5}>
-            {localStorage.username}
+            {localStorage.username.match(/\b\w/g).join("")}
           </Avatar>
         </Flex>
       </Container>
