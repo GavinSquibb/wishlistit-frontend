@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  Center,
   Container,
   Flex,
   Group,
@@ -9,19 +8,26 @@ import {
   Image,
 } from "@mantine/core";
 import logo from "../../assets/wishlistit-logo.png";
+import { useNavigate } from "react-router-dom";
 
 export function AppHeader() {
+  const navigate = useNavigate();
+
   return (
     <Header height={60}>
       <Container fluid>
         <Flex justify={"space-between"}>
           <Group spacing={30}>
             <Image maw={200} src={logo} alt="wishlistit-logo" />
-            <Button variant="subtle">Wish Lists</Button>
-            <Button variant="subtle">Create Wish List</Button>
+            <Button variant="subtle" onClick={() => navigate("/")}>
+              Wish Lists
+            </Button>
+            <Button variant="subtle" onClick={() => navigate("/create")}>
+              Create Wish List
+            </Button>
           </Group>
-          <Avatar color="blue" radius={"xl"} top={5}>
-            GS
+          <Avatar color="red" radius={"xl"} top={5}>
+            {localStorage.username}
           </Avatar>
         </Flex>
       </Container>

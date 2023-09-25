@@ -1,3 +1,4 @@
+import React from "react";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import {
@@ -17,7 +18,7 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/wishlistit-logo.png";
+import logo from "../../assets/wishlistit-logo.png";
 
 export function AuthenticationForm(props: PaperProps) {
   const navigate = useNavigate();
@@ -58,7 +59,6 @@ export function AuthenticationForm(props: PaperProps) {
 
         <form
           onSubmit={form.onSubmit(async () => {
-            // todo move to own function
             const { data } = await axios.post(
               "http://localhost:8000/token/",
               {
@@ -69,7 +69,6 @@ export function AuthenticationForm(props: PaperProps) {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                // withCredentials: true,
               }
             );
 
@@ -143,11 +142,7 @@ export function AuthenticationForm(props: PaperProps) {
               color="dimmed"
               onClick={() => toggle()}
               size="xs"
-            >
-              {type === "register"
-                ? "Already have an account? Login"
-                : "Don't have an account? Register"}
-            </Anchor>
+            />
             <Button type="submit" radius="xl">
               {upperFirst(type)}
             </Button>

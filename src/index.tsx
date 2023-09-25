@@ -1,17 +1,44 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { AuthenticationForm } from "./views/Login";
+import { AuthenticationForm } from "./components/Login/Login";
 import { AppHeader } from "./components/AppHeader/AppHeader";
+import { Dashboard } from "./components/Dashboard/Dashboard";
+import { CreateWishList } from "./components/CreateWishList/CreateWishList";
+import { MantineProvider } from "@mantine/core";
+import { WishListDetail } from "./components/WishListDetail/WishListDetail";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <AppHeader></AppHeader>,
-  },
-  {
     path: "/login",
     element: <AuthenticationForm />,
+  },
+  {
+    path: "/",
+    element: (
+      <>
+        <AppHeader />
+        <Dashboard />
+      </>
+    ),
+  },
+  {
+    path: "/create",
+    element: (
+      <>
+        <AppHeader />
+        <CreateWishList />
+      </>
+    ),
+  },
+  {
+    path: "/wishlist/:id",
+    element: (
+      <>
+        <AppHeader />
+        <WishListDetail />
+      </>
+    ),
   },
 ]);
 
@@ -21,6 +48,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <MantineProvider theme={{ primaryColor: "red" }}>
+      <RouterProvider router={router} />
+    </MantineProvider>
   </React.StrictMode>
 );
